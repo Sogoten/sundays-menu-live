@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sundays — pizza · pasta · burger</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --cream: #F5F0E8; --dark: #2C2C2C; --heading-color: #B8965A; --item-color: #2C2C2C; --light: #7A7A7A; --rule: #D4C4A8; }
+  html { background: #e8e2d6; }
+  body { font-family: 'Cormorant Garamond', Georgia, serif; background: var(--cream); color: var(--dark); max-width: 680px; margin: 0 auto; min-height: 100vh; }
+  @media (min-width: 900px) { body { max-width: none; margin: 0; } }
+  .cover { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 2rem; position: relative; border-bottom: 1px solid var(--rule); }
+  .cover::before { content: ''; position: absolute; inset: 14px; border: 0.8px solid var(--heading-color); pointer-events: none; }
+  .cover-title { font-family: 'Dancing Script', cursive; font-size: clamp(3.5rem, 10vw, 6rem); color: var(--heading-color); line-height: 1; letter-spacing: -1px; }
+  .cover-sub { font-size: 1rem; color: var(--heading-color); letter-spacing: 3px; margin-top: 0.6rem; text-transform: lowercase; }
+  .cover-rule { width: 40px; height: 1px; background: var(--heading-color); margin: 1.4rem auto; }
+  .cover-address { font-size: 0.95rem; color: var(--heading-color); letter-spacing: 1.5px; }
+  /* ── NAV — mobile: horizontal scroll bar, desktop: vertical sidebar ── */
+  .nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--rule); display: flex; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { flex-shrink: 0; padding: 0.9rem 1.2rem; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--light); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .nav a:hover, .nav a.active { color: var(--heading-color); border-bottom-color: var(--heading-color); }
+  .content { padding: 0 1.5rem 4rem; }
+  .section { padding-top: 2.5rem; }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+  .section-header::before, .section-header::after { content: ''; flex: 1; height: 0.5px; background: var(--heading-color); }
+  .section-title { font-size: 0.8rem; letter-spacing: 4px; color: var(--heading-color); text-transform: uppercase; white-space: nowrap; font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+  .item { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.85rem 0; border-bottom: 0.5px solid var(--rule); }
+  .item-left { flex: 1; min-width: 0; }
+  .item-name { font-size: 1.2rem; font-weight: 400; color: var(--item-color); line-height: 1.3; }
+  .item-desc { font-size: 0.95rem; color: var(--light); font-style: italic; margin-top: 3px; line-height: 1.4; }
+  .item-price { font-size: 1.1rem; font-weight: 400; color: var(--item-color); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .drink-row { display: flex; justify-content: space-between; padding: 0.65rem 0; border-bottom: 0.5px solid var(--rule); font-size: 1.1rem; color: var(--item-color); }
+  .wine-block { padding: 0.8rem 0; border-bottom: 0.5px solid var(--rule); }
+  .wine-header { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .wine-name { font-size: 1.1rem; font-weight: 400; color: var(--item-color); }
+  .wine-price { font-size: 1.1rem; color: var(--item-color); white-space: nowrap; }
+  .wine-desc { font-size: 0.92rem; color: var(--light); font-style: italic; margin-top: 4px; line-height: 1.5; }
+  footer { text-align: center; padding: 2rem 1.5rem; font-size: 0.88rem; color: var(--light); border-top: 0.5px solid var(--heading-color); line-height: 1.8; letter-spacing: 0.5px; }
+  @media (max-width: 500px) { .cover::before { inset: 10px; } .content { padding: 0 1rem 3rem; } }
+
+  /* ── DESKTOP layout (≥ 900px) ── */
+  @media (min-width: 900px) {
+    html { background: #e8e2d6; }
+    body { max-width: none; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0,860px) 220px; grid-template-rows: auto auto 1fr auto; grid-template-areas: "sidebar cover ." "sidebar nav ." "sidebar main ." "sidebar footer ."; min-height: 100vh; justify-content: center; }
+
+    /* Cover */
+    .cover { grid-area: cover; min-height: 40vh; border-bottom: 1px solid var(--rule); border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+    .cover::before { inset: 14px; }
+
+    /* Sidebar nav */
+    .nav { grid-area: sidebar; flex-direction: column; overflow-x: visible; overflow-y: auto; border-bottom: none; border-right: 1px solid var(--rule); position: sticky; top: 0; height: 100vh; align-items: stretch; padding: 2rem 0 2rem; background: var(--cream); justify-content: flex-start; }
+    .nav a { border-bottom: none; border-left: 3px solid transparent; padding: 0.75rem 1.6rem; font-size: 0.82rem; letter-spacing: 2px; }
+    .nav a:hover, .nav a.active { border-bottom: none; border-left-color: var(--heading-color); background: rgba(0,0,0,0.03); }
+    /* Sundays logo in sidebar */
+    .nav::before { content: 'Sundays'; display: block; font-family: 'Dancing Script', cursive; font-size: 1.7rem; color: var(--heading-color); text-align: center; padding: 0 1rem 1.5rem; border-bottom: 0.5px solid var(--rule); margin-bottom: 1rem; }
+
+    /* Content area */
+    .content { grid-area: main; padding: 0 3rem 4rem; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+
+    footer { grid-area: footer; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+
+    /* Items in 2-column grid for food sections on wide screens */
+    .items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.5rem; }
+    .items-grid .item { break-inside: avoid; }
+  }
+
+  @media (min-width: 1200px) {
+    body { grid-template-columns: 240px minmax(0,960px) 240px; }
+    .content { padding: 0 4rem 4rem; }
+  }
+</style>
+</head>
+<body>
+<section class="cover">
+  <h1 class="cover-title">Sundays</h1>
+  <p class="cover-sub">pizza &nbsp;·&nbsp; pasta &nbsp;·&nbsp; burger</p>
+  <div class="cover-rule"></div>
+  <p class="cover-address">Agiou Nikolaou 42 &nbsp;·&nbsp; Litochoro</p>
+</section>
+<nav class="nav">
+  <a href="#appetizers">Appetizers</a>
+  <a href="#salads">Salads</a>
+  <a href="#pasta">Pasta</a>
+  <a href="#pizza">Pizza</a>
+  <a href="#burgers">Burgers</a>
+  <a href="#secondi">Secondi</a>
+  <a href="#drinks">Drinks</a>
+  <a href="#wines">Wines</a>
+</nav>
+<div class="content">
+  <section class="section" id="appetizers">
+    <div class="section-header"><span class="section-title">Appetizers</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Focaccia</div><div class="item-desc">Garlic butter, parmesan, thyme, oregano</div></div><div class="item-price">7,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Mushrooms Champignons</div><div class="item-desc">Aged balsamic marinade, herbs</div></div><div class="item-price">8,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Baked Florinella Cheese</div><div class="item-desc">Semi-hard Florina cheese, seasonal fruit jam</div></div><div class="item-price">9,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Country Style Cheddar &amp; Bacon</div></div><div class="item-price">8,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Chicken Sticks</div><div class="item-desc">Chicken breast julienne, breaded with sesame</div></div><div class="item-price">12,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Feta Cheese</div><div class="item-desc">With olive oil and oregano</div></div><div class="item-price">5,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Tzatziki</div></div><div class="item-price">5,00 €</div></div></div>
+  </section>
+  <section class="section" id="salads">
+    <div class="section-header"><span class="section-title">Salads</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Greek Salad with Kritamo</div><div class="item-desc">Fresh tomato, cucumber, feta, Kalamata olives, sea fennel, extra virgin olive oil</div></div><div class="item-price">17,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Italiano</div><div class="item-desc">Green salad, parmesan flakes, sun-dried tomato, nuts</div></div><div class="item-price">13,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Caesar's</div><div class="item-desc">Iceberg, parmesan, croutons, bacon, chicken</div></div><div class="item-price">15,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Black</div><div class="item-desc">Baby salad mix, avocado, white mozzarella, nuts, prosciutto, orange vinaigrette</div></div><div class="item-price">14,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Burrata</div><div class="item-desc">Tomatoes, basil pesto, burrata from 100% Greek buffalo milk</div></div><div class="item-price">15,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Sundays</div><div class="item-desc">Green salad, cherry tomatoes, green apple, almond fillet, parmesan mushrooms, fig, citrus vinaigrette</div></div><div class="item-price">13,00 €</div></div></div>
+  </section>
+  <section class="section" id="pasta">
+    <div class="section-header"><span class="section-title">Pasta Classica</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Spaghetti Carbonara</div><div class="item-desc">Bacon, parmesan, parmesan cream</div></div><div class="item-price">14,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Spaghetti Bolognese</div><div class="item-desc">Spaghetti, bolognese sauce</div></div><div class="item-price">18,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Rigatoni Alfredo</div><div class="item-desc">Chicken, red peppers, crème fraîche, parmesan</div></div><div class="item-price">14,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Spaghetti Pesto, Cherry Tomatoes &amp; Mozzarella</div><div class="item-desc">Fresh basil pesto, cherry tomatoes, mini mozzarella</div></div><div class="item-price">16,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Spaghetti Sicily</div><div class="item-desc">Fresh tomato sauce, vegetables, feta cheese, fresh herbs from Olympus</div></div><div class="item-price">14,00 €</div></div></div>
+    <div class="section-header"><span class="section-title">Pasta · Ravioli</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Mushroom Ravioli</div><div class="item-desc">Homemade ravioli stuffed with mushrooms and ricotta, buttery sauce, parmesan</div></div><div class="item-price">18,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Cheese Ravioli</div><div class="item-desc">Homemade cheese ravioli in velvety cream sauce with golden pumpkin, parmesan</div></div><div class="item-price">18,00 €</div></div></div>
+    <div class="section-header"><span class="section-title">Risotti</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Mushroom Risotto</div><div class="item-desc">Creamy risotto, mushrooms, white wine, parmesan, thyme, truffle oil</div></div><div class="item-price">17,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Risotto with Roasted Pumpkin</div><div class="item-desc">Creamy risotto, roasted pumpkin, crispy pancetta, parmesan, fresh herbs, white wine</div></div><div class="item-price">17,00 €</div></div></div>
+  </section>
+  <section class="section" id="pizza">
+    <div class="section-header"><span class="section-title">Pizza</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Margarita</div><div class="item-desc">Tomato sauce, mozzarella</div></div><div class="item-price">15,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Pizza Gyros</div><div class="item-desc">Cheese, gyros, onion, tomato</div></div><div class="item-price">17,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Peperoni</div><div class="item-desc">Pepperoni</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Sundays</div><div class="item-desc">Ham, bacon, mushrooms, green pepper</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Greek</div><div class="item-desc">Feta cheese, olive, tomato, mushrooms, onion, red pepper</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">BBQ</div><div class="item-desc">BBQ sauce, bacon, chicken</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Pesto</div><div class="item-desc">Tomato sauce, parmesan, fresh tomato, mozzarella, basil pesto</div></div><div class="item-price">17,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Al Funchi</div><div class="item-desc">Fresh mushrooms, garlic, prosciutto, basil</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Philadelfia</div><div class="item-desc">Chicken, bacon, green pepper</div></div><div class="item-price">19,50 €</div></div></div>
+  </section>
+  <section class="section" id="burgers">
+    <div class="section-header"><span class="section-title">Burgers</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Burger Classic</div><div class="item-desc">Beef burger, tomato, lettuce, cheddar, bacon, mayo sauce · +Fried egg 1,50 €</div></div><div class="item-price">18,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Burger Chicken</div><div class="item-desc">Chicken burger, parmesan, lettuce, tomato, mustard sauce · +Fried egg 1,50 €</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Sundays Burger</div><div class="item-desc">Beef burger, cheddar, avocado, tomato, prosciutto, mayonnaise, pepper · +Fried egg 1,50 €</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Vegan Burger</div><div class="item-desc">Handmade vegetable burger, tomato, lettuce, vegan mayonnaise</div></div><div class="item-price">18,00 €</div></div></div>
+    <div class="section-header"><span class="section-title">Smashed Burgers</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Classic Burger</div><div class="item-desc">Brioche bun, beef burger, cheddar, bacon, sauce, tomato, lettuce</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Jimmy's Burger</div><div class="item-desc">Brioche bun, beef burger, feta sauce, mustard, tomato, onion</div></div><div class="item-price">18,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Chicken Halloumi Burger</div><div class="item-desc">Brioche bun, grilled chicken fillet, halloumi, mushrooms, sauce</div></div><div class="item-price">18,50 €</div></div></div>
+  </section>
+  <section class="section" id="secondi">
+    <div class="section-header"><span class="section-title">Secondi</span></div><div class="items-grid">
+    <div class="item"><div class="item-left"><div class="item-name">Burger Stuffed with Feta &amp; Vermiou Cheese</div><div class="item-desc">Handmade beef burger stuffed with feta, Vermio cheese, fresh tomato — freshly cut fries, oregano</div></div><div class="item-price">22,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Pork Souvlaki</div><div class="item-desc">Marinated with Mediterranean herbs, handmade sauce, pita bread</div></div><div class="item-price">17,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Rib Steak of Pieria</div><div class="item-desc">Served with country potatoes</div></div><div class="item-price">23,50 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Two Beef Patties</div><div class="item-desc">On hot pies, fries, cool dressing</div></div><div class="item-price">22,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Beef Steak</div><div class="item-desc">Fresh, juicy and charcoal-grilled — served with crispy fries or vegetables</div></div><div class="item-price">49,00 € / kg</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Pork Gyros</div><div class="item-desc">With potatoes and tzatziki</div></div><div class="item-price">12,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Chicken Fillet</div><div class="item-desc">Mediterranean vegetables, lemon</div></div><div class="item-price">17,00 €</div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Chicken Nuggets with Potatoes</div><div class="item-desc">Kids favourite</div></div><div class="item-price">8,00 €</div></div></div>
+  </section>
+  <section class="section" id="drinks">
+    <div class="section-header"><span class="section-title">Refreshments</span></div>
+    <div class="drink-row"><span>Pepsi</span><span>3,00 €</span></div>
+    <div class="drink-row"><span>Pepsi Max</span><span>3,00 €</span></div>
+    <div class="drink-row"><span>Orangeade</span><span>3,00 €</span></div>
+    <div class="drink-row"><span>Lemonade</span><span>3,00 €</span></div>
+    <div class="drink-row"><span>Sprite</span><span>3,00 €</span></div>
+    <div class="drink-row"><span>Soyroti Sparkling Water</span><span>3,00 €</span></div>
+    <div class="section-header"><span class="section-title">Beers &amp; More</span></div>
+    <div class="drink-row"><span>Kaizer</span><span>6,00 €</span></div>
+    <div class="drink-row"><span>Alfa</span><span>6,00 €</span></div>
+    <div class="drink-row"><span>Fix Aney / Fix 0% Alc.</span><span>6,00 €</span></div>
+    <div class="drink-row"><span>Radler Amstel</span><span>6,00 €</span></div>
+    <div class="drink-row"><span>Aperol Spritz / Aperitivo</span><span>12,00 €</span></div>
+    <div class="drink-row"><span>Homemade Sangria (glass)</span><span>7,00 €</span></div>
+    <div class="drink-row"><span>Homemade Sangria (1 liter)</span><span>22,00 €</span></div>
+    <div class="section-header"><span class="section-title">Wine by the Glass</span></div>
+    <div class="drink-row"><span>Dry White</span><span>7,00 €</span></div>
+    <div class="drink-row"><span>Dry Red</span><span>7,00 €</span></div>
+    <div class="drink-row"><span>Red Semi Sweet</span><span>7,00 €</span></div>
+    <div class="drink-row"><span>Rosé</span><span>7,00 €</span></div>
+  </section>
+  <section class="section" id="wines">
+    <div class="section-header"><span class="section-title">White Wines</span></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Prorogos White — Lafazani</span><span class="wine-price">22,00 €</span></div><div class="wine-desc">Dry White · Rodotis 40%, Savvatino 40%, Mosxofilero 20% · Nemea &amp; Korinthia</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Prorogos Semi Sweet White — Lafazani</span><span class="wine-price">22,00 €</span></div><div class="wine-desc">Semi Sweet White · Rodotis, Savvatino, Mosxofilero · Achaias</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Mythiko Vouno — Dry White Malagouzia &amp; Asyrtiko</span><span class="wine-price">28,00 €</span></div><div class="wine-desc">Intensely developing nose with peach, rose, jasmine and light minerality.</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Ino — Organic Dry White</span><span class="wine-price">27,00 €</span></div><div class="wine-desc">Trebbiano 100%, 6 months in French oak. Aromas of roasted nuts, honey, cedar.</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Eratines Eyxes Leykes</span><span class="wine-price">28,00 €</span></div><div class="wine-desc">Asyrtiko, Chardonnay, Malagouzia. Ages beautifully — ideal with creamy dishes.</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Night — Organic Dry White</span><span class="wine-price">26,00 €</span></div><div class="wine-desc">Bidiano 90%, Assyrtiko 10%. Elegant nose of apricot, chamomile and quince.</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Gymni Basilissa</span><span class="wine-price">35,00 €</span></div><div class="wine-desc">Pieria Ritini, Assyrtiko, Chardonnay. Matures in new barrels.</div></div>
+    <div class="section-header"><span class="section-title">Red Wines</span></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Prorogos Red — Lafazani</span><span class="wine-price">22,00 €</span></div><div class="wine-desc">Dry Red · Agiorgitiko 60%, Merlot 40% · Selected vineyards of Nemea</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Prorogos Semi Sweet Red — Lafazani</span><span class="wine-price">22,00 €</span></div><div class="wine-desc">Semi Sweet Red · Agiorgitiko 50%, Moschato Tirnavou 20%, Merlot 30%</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Mythiko Vouno — Red Dry Merlot &amp; Syrah</span><span class="wine-price">35,00 €</span></div><div class="wine-desc">Intensely developing nose with pepper, dried plum, ripe tomato, vanilla.</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Eratines Eyxes Erythres</span><span class="wine-price">35,00 €</span></div><div class="wine-desc">Xinomauro, Syrah, Cabernet Sauvignon. Aged 18 months in French oak.</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Gymnos Basilias</span><span class="wine-price">65,00 €</span></div><div class="wine-desc">Syrah, Coriander · Alc. 14.5% · 18 months in French oak.</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Oniros — Organic Dry Red</span><span class="wine-price">36,00 €</span></div><div class="wine-desc">12 months in French and American oak. Dense black-red. Complex nose.</div></div>
+    <div class="section-header"><span class="section-title">Rosé Wines</span></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Prorogos Rosé — Lafazani</span><span class="wine-price">22,00 €</span></div><div class="wine-desc">Dry Rosé · Agiorgitiko 10%, Roditis 75%, Moscato 15%</div></div>
+    <div class="wine-block"><div class="wine-header"><span class="wine-name">Prorogos Semi Sweet Rosé — Lafazani</span><span class="wine-price">22,00 €</span></div><div class="wine-desc">Semi Sweet Rosé · Agiorgitiko, Roditis, Moscato, Moscofilero</div></div>
+  </section>
+</div>
+<footer>
+  Prices include all legal taxes &nbsp;·&nbsp; Please inform our staff of any allergies or intolerances<br>
+  Market Legal Officer: Katerina Dimopoulou
+</footer>
+<script>
+  const navLinks=document.querySelectorAll('.nav a');
+  const sections=document.querySelectorAll('.section');
+  const isDesktop = () => window.innerWidth >= 900;
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){navLinks.forEach(a=>a.classList.remove('active'));const a=document.querySelector('.nav a[href="#'+e.target.id+'"]');if(a){a.classList.add('active');a.scrollIntoView({behavior:'smooth',block:'nearest',inline: isDesktop()?'nearest':'center'})}}})} ,{threshold:0.3});
+  sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
