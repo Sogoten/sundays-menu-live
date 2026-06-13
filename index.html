@@ -41,6 +41,11 @@
   .wine-desc { font-size: 0.92rem; color: var(--light); font-style: italic; margin-top: 4px; line-height: 1.5; }
   footer { text-align: center; padding: 2rem 1.5rem; font-size: 0.88rem; color: var(--light); border-top: 0.5px solid var(--heading-color); line-height: 1.8; letter-spacing: 0.5px; }
   @media (max-width: 500px) { .cover::before { inset: 10px; } .content { padding: 0 1rem 3rem; } }
+  @media (max-width: 600px) {
+    .cover { min-height: auto; padding: 2rem 1.5rem; }
+    .cover-logo { width: clamp(160px, 45vw, 260px); }
+    .cover-title { font-size: clamp(2.5rem, 14vw, 4rem); }
+  }
 
   /* ── DESKTOP layout (≥ 900px) ── */
   @media (min-width: 900px) {
